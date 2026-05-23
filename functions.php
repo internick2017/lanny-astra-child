@@ -195,3 +195,58 @@ function lanny_all_strings() {
 		),
 	);
 }
+
+/* ==========================================================
+   SEO — título y descripción por idioma (via filtros Yoast)
+   ========================================================== */
+add_filter( 'wpseo_title', function( $title ) {
+	if ( ! is_front_page() ) {
+		return $title;
+	}
+	$lang = function_exists( 'pll_current_language' ) ? pll_current_language() : 'pt';
+	$titles = array(
+		'pt' => 'Lanny Herrera | Professora de Inglês, Espanhol e Português Online',
+		'es' => 'Lanny Herrera | Profesora de Inglés, Español y Portugués Online',
+		'en' => 'Lanny Herrera | Online English, Spanish & Portuguese Teacher',
+	);
+	return isset( $titles[ $lang ] ) ? $titles[ $lang ] : $title;
+} );
+
+add_filter( 'wpseo_metadesc', function( $desc ) {
+	if ( ! is_front_page() ) {
+		return $desc;
+	}
+	$lang = function_exists( 'pll_current_language' ) ? pll_current_language() : 'pt';
+	$descs = array(
+		'pt' => 'Aulas online ao vivo de inglês, espanhol e português para todos os níveis. Metodologia personalizada e preparação para TOEIC, TOEFL, IELTS, DELE e CELPE-Bras.',
+		'es' => 'Clases online en vivo de inglés, español y portugués para todos los niveles. Metodología personalizada y preparación para TOEIC, TOEFL, IELTS y DELE.',
+		'en' => 'Live online classes in English, Spanish and Portuguese for all levels. Personalized methodology and preparation for TOEIC, TOEFL, IELTS, DELE and CELPE-Bras.',
+	);
+	return isset( $descs[ $lang ] ) ? $descs[ $lang ] : $desc;
+} );
+
+/* ==========================================================
+   Language switcher — forzar URLs a la raíz del idioma.
+   Polylang vincula a /es/inicio-2/ en vez de /es/; esto
+   lo corrige usando pll_home_url() para cada lang-item.
+   ========================================================== */
+add_filter( 'wp_nav_menu_objects', function( $items, $_args ) {
+	if ( ! function_exists( 'pll_home_url' ) ) {
+		return $items;
+	}
+	foreach ( $items as $item ) {
+		if ( empty( $item->classes ) || ! in_array( 'lang-item', $item->classes, true ) ) {
+			continue;
+		}
+		foreach ( $item->classes as $class ) {
+			if ( preg_match( '/^lang-item-([a-z]{2})$/', $class, $m ) ) {
+				$home = pll_home_url( $m[1] );
+				if ( $home ) {
+					$item->url = $home;
+				}
+				break;
+			}
+		}
+	}
+	return $items;
+}, 10, 2 );
