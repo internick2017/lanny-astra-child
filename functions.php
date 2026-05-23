@@ -236,13 +236,16 @@ add_action( 'wp_footer', function() {
 	if ( ! function_exists( 'pll_languages_list' ) ) {
 		return;
 	}
-	$default = function_exists( 'pll_default_language' ) ? pll_default_language() : 'pt';
+	$default  = function_exists( 'pll_default_language' ) ? pll_default_language() : 'pt';
 	$langs    = pll_languages_list();
+	// get_option('home') lee la URL base directo de la DB, sin el filtro
+	// home_url que Polylang modifica según el idioma activo.
+	$base     = trailingslashit( get_option( 'home' ) );
 	$map      = array();
 	foreach ( $langs as $lang ) {
 		$map[ $lang ] = ( $lang === $default )
-			? home_url( '/' )
-			: home_url( '/' . $lang . '/' );
+			? $base
+			: $base . $lang . '/';
 	}
 	?>
 	<script>
