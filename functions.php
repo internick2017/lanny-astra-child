@@ -1,17 +1,8 @@
 <?php
-/**
- * Astra Child — Lanny Herrera functions
- *
- * @package Astra_Child_Lanny
- */
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/**
- * Enqueue parent + child styles.
- */
 function lanny_enqueue_styles() {
 	wp_enqueue_style(
 		'astra-parent',
@@ -21,9 +12,16 @@ function lanny_enqueue_styles() {
 	);
 
 	wp_enqueue_style(
+		'lanny-fonts',
+		'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap',
+		array(),
+		null
+	);
+
+	wp_enqueue_style(
 		'astra-child-lanny',
 		get_stylesheet_uri(),
-		array( 'astra-parent' ),
+		array( 'astra-parent', 'lanny-fonts' ),
 		wp_get_theme()->get( 'Version' )
 	);
 }

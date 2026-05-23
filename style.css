@@ -5,52 +5,54 @@ Description: Child theme de Astra para el sitio de Lanny Herrera (profesora de i
 Author: Nick Granados
 Author URI: https://nickgranados.com
 Template: astra
-Version: 0.1.0
+Version: 0.2.0
 License: MIT
 Text Domain: astra-child-lanny
 */
 
 /* =========================================================
-   Paleta (placeholder — confirmar con Lanny en Fase 3)
+   Paleta
    ========================================================= */
 :root {
-  --color-primary: #1e3a8a;   /* navy temporal */
-  --color-accent:  #f97316;   /* coral cálido temporal */
-  --color-bg:      #fdfbf7;   /* crema */
-  --color-text:    #1f2937;
+  --color-primary:  #1e3a8a;
+  --color-accent:   #f97316;
+  --color-bg:       #fdfbf7;
+  --color-text:     #1f2937;
+  --color-muted:    #6b7280;
+  --color-section-alt: #eff6ff;
+  --color-section-warm: #fff7ed;
 }
 
 /* =========================================================
-   Tipografía base
+   Base
    ========================================================= */
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   color: var(--color-text);
   background-color: var(--color-bg);
+  font-size: 1rem;
+  line-height: 1.7;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   font-family: 'Playfair Display', Georgia, serif;
-  line-height: 1.2;
+  line-height: 1.25;
+  color: var(--color-primary);
 }
 
 /* =========================================================
-   Front page: ocultar título "Início" duplicado.
-   El H1 del Hero ya cumple esa función SEO/accesibilidad.
+   Ocultar título de página duplicado en front page
    ========================================================= */
 .home .entry-title,
 .home .ast-archive-title,
-.page-id-15 .entry-title {
-  display: none;
-}
-
-.home .entry-content > .alignfull:first-child,
-.page-id-15 .entry-content > .alignfull:first-child {
-  margin-top: -2rem;
+.page-template-default.page .entry-title,
+body.page-id-15 .entry-title,
+body.page-id-15 h1.entry-title {
+  display: none !important;
 }
 
 /* =========================================================
-   Smooth scroll para anchors del menu (#hero, #sobre, etc).
+   Smooth scroll
    ========================================================= */
 html {
   scroll-behavior: smooth;
@@ -58,11 +60,285 @@ html {
 }
 
 /* =========================================================
-   Buttons: estilo pill cálido.
+   Hero (Cover block)
    ========================================================= */
-.wp-block-button__link {
-  background-color: var(--color-accent);
-  border-radius: 999px;
-  padding: 1rem 2rem;
-  font-weight: 600;
+.wp-block-cover {
+  min-height: 85vh !important;
+}
+
+.wp-block-cover__inner-container h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem) !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
+  color: #ffffff !important;
+  margin-bottom: 1.25rem;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+.wp-block-cover__inner-container .has-large-font-size {
+  font-size: clamp(1.1rem, 2.5vw, 1.35rem) !important;
+  opacity: 0.92;
+  margin-bottom: 2rem;
+}
+
+/* =========================================================
+   Buttons
+   ========================================================= */
+.wp-block-button__link,
+.wp-block-button__link:visited {
+  background-color: var(--color-accent) !important;
+  color: #ffffff !important;
+  border-radius: 999px !important;
+  padding: 0.875rem 2.25rem !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  letter-spacing: 0.01em;
+  text-decoration: none !important;
+  box-shadow: 0 4px 14px rgba(249,115,22,0.4);
+  transition: transform 0.15s, box-shadow 0.15s;
+  display: inline-block;
+}
+
+.wp-block-button__link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(249,115,22,0.5);
+  background-color: #ea6c0a !important;
+}
+
+/* =========================================================
+   Seções gerais — espaçamento e tipografia
+   ========================================================= */
+.wp-block-group {
+  padding-top: 5rem !important;
+  padding-bottom: 5rem !important;
+}
+
+.wp-block-group > .wp-block-heading,
+.wp-block-group h2.wp-block-heading {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem) !important;
+  margin-bottom: 2.5rem;
+  color: var(--color-primary);
+}
+
+/* =========================================================
+   Seção "Sobre mim"
+   ========================================================= */
+#sobre {
+  background-color: var(--color-bg);
+}
+
+#sobre h2 {
+  color: var(--color-primary);
+}
+
+/* =========================================================
+   Seção "Idiomas" — cards
+   ========================================================= */
+#idiomas {
+  background-color: var(--color-section-alt) !important;
+}
+
+#idiomas .wp-block-column {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 2px 12px rgba(30,58,138,0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#idiomas .wp-block-column:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(30,58,138,0.14);
+}
+
+#idiomas .wp-block-column h3 {
+  color: var(--color-primary);
+  font-size: 1.35rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+/* =========================================================
+   Seção "Exames"
+   ========================================================= */
+#exames {
+  background-color: var(--color-section-warm) !important;
+}
+
+#exames h2 {
+  color: var(--color-primary);
+}
+
+#exames .has-large-font-size {
+  color: var(--color-primary);
+  font-size: 1.25rem !important;
+}
+
+/* =========================================================
+   Seção "Metodologia" — ícones + cards
+   ========================================================= */
+#metodologia {
+  background-color: var(--color-bg);
+}
+
+#metodologia .wp-block-column {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.75rem 1.25rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  text-align: center;
+}
+
+#metodologia .wp-block-column h3 {
+  color: var(--color-primary);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+#metodologia .has-x-large-font-size {
+  font-size: 2.5rem !important;
+  margin-bottom: 0.5rem;
+}
+
+/* =========================================================
+   Seção "Depoimentos"
+   ========================================================= */
+#depoimentos {
+  background-color: var(--color-section-alt) !important;
+}
+
+#depoimentos h2 {
+  color: var(--color-primary);
+}
+
+/* =========================================================
+   Seção "Contato"
+   ========================================================= */
+#contato {
+  background-color: var(--color-bg);
+}
+
+#contato h2 {
+  color: var(--color-primary);
+  margin-bottom: 2rem;
+}
+
+/* CF7 form styling */
+.wpcf7-form input[type="text"],
+.wpcf7-form input[type="email"],
+.wpcf7-form input[type="tel"],
+.wpcf7-form textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: var(--color-text);
+  background: #fff;
+  transition: border-color 0.15s;
+  margin-bottom: 0.75rem;
+}
+
+.wpcf7-form input:focus,
+.wpcf7-form textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(30,58,138,0.1);
+}
+
+.wpcf7-form input[type="submit"] {
+  background-color: var(--color-accent) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 999px !important;
+  padding: 0.875rem 2.25rem !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  cursor: pointer;
+  transition: background-color 0.15s, transform 0.15s;
+}
+
+.wpcf7-form input[type="submit"]:hover {
+  background-color: #ea6c0a !important;
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   Header / Nav
+   ========================================================= */
+.main-header-bar {
+  background-color: #ffffff !important;
+  box-shadow: 0 1px 12px rgba(0,0,0,0.08) !important;
+}
+
+.main-header-bar .site-title a,
+.main-header-bar .site-title a:visited {
+  color: var(--color-primary) !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-weight: 700;
+}
+
+/* Nav links */
+.main-header-menu .menu-item a {
+  color: var(--color-text) !important;
+  font-weight: 500;
+  transition: color 0.15s;
+}
+
+.main-header-menu .menu-item a:hover {
+  color: var(--color-accent) !important;
+}
+
+/* =========================================================
+   Footer
+   ========================================================= */
+.site-footer {
+  background-color: var(--color-primary) !important;
+  color: rgba(255,255,255,0.8) !important;
+  padding: 2rem 0 !important;
+  font-size: 0.9rem;
+}
+
+.site-footer a,
+.site-footer a:visited {
+  color: rgba(255,255,255,0.7) !important;
+}
+
+.site-footer a:hover {
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   Gutenberg palette overrides
+   ========================================================= */
+.has-pale-cyan-blue-background-color {
+  background-color: var(--color-section-alt) !important;
+}
+
+.has-pale-pink-background-color {
+  background-color: var(--color-section-warm) !important;
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+@media (max-width: 768px) {
+  .wp-block-cover {
+    min-height: 70vh !important;
+  }
+
+  .wp-block-columns {
+    gap: 1rem !important;
+  }
+
+  #idiomas .wp-block-column,
+  #metodologia .wp-block-column {
+    margin-bottom: 1rem;
+  }
+
+  .wp-block-group {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
 }
