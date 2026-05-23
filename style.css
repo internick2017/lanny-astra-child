@@ -5,7 +5,7 @@ Description: Child theme de Astra para el sitio de Lanny Herrera (profesora de i
 Author: Nick Granados
 Author URI: https://nickgranados.com
 Template: astra
-Version: 0.2.0
+Version: 0.3.0
 License: MIT
 Text Domain: astra-child-lanny
 */
@@ -349,5 +349,367 @@ html {
   .wp-block-group {
     padding-top: 3rem !important;
     padding-bottom: 3rem !important;
+  }
+}
+
+/* =========================================================
+   Front-Page Template — lh-* namespace (v0.3.0)
+   ========================================================= */
+
+/* Prevent horizontal scroll from full-bleed sections */
+body.home {
+  overflow-x: hidden;
+}
+
+/* Reset Astra's content constraints so full-bleed sections can work */
+body.home #page,
+body.home #content,
+body.home #primary.lh-content-area,
+body.home .lh-content-area .site-main {
+  overflow: visible !important;
+}
+
+body.home #primary.lh-content-area {
+  width: 100% !important;
+  max-width: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  float: none !important;
+}
+
+/* Full-bleed section — breaks out of any Astra container */
+.lh-section {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding: 5rem 0;
+  background-color: var(--color-bg);
+  box-sizing: border-box;
+}
+
+.lh-section--alt  { background-color: var(--color-section-alt)  !important; }
+.lh-section--warm { background-color: var(--color-section-warm) !important; }
+
+/* Inner container */
+.lh-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  box-sizing: border-box;
+}
+
+/* Section titles */
+.lh-section__title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  color: var(--color-primary);
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.lh-section__lead {
+  font-size: 1.1rem;
+  color: var(--color-muted);
+  text-align: center;
+  max-width: 640px;
+  margin: -1.5rem auto 2.5rem;
+  line-height: 1.7;
+}
+
+/* =========================================================
+   Hero
+   ========================================================= */
+.lh-hero {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 55%, #1d4ed8 100%) !important;
+  padding: 7rem 0 6rem !important;
+  text-align: center;
+}
+
+.lh-hero__eyebrow {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 1.25rem;
+}
+
+.lh-hero__title {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: clamp(2rem, 5vw, 3.5rem) !important;
+  font-weight: 700;
+  color: #ffffff !important;
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+
+.lh-hero__sub {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  color: rgba(255,255,255,0.88);
+  max-width: 580px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+}
+
+.lh-hero__actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* =========================================================
+   Buttons
+   ========================================================= */
+.lh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none !important;
+  transition: transform 0.15s, box-shadow 0.15s, background-color 0.15s;
+  cursor: pointer;
+  border: 2px solid transparent;
+  line-height: 1;
+}
+
+.lh-btn--primary {
+  background-color: var(--color-accent) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(249,115,22,0.4);
+}
+
+.lh-btn--primary:hover {
+  background-color: #ea6c0a !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(249,115,22,0.5);
+  color: #ffffff !important;
+}
+
+.lh-btn--wa {
+  background-color: #25d366 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(37,211,102,0.35);
+}
+
+.lh-btn--wa:hover {
+  background-color: #1da851 !important;
+  transform: translateY(-2px);
+  color: #ffffff !important;
+}
+
+.lh-btn--outline {
+  background-color: transparent !important;
+  border-color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
+}
+
+.lh-btn--outline:hover {
+  background-color: var(--color-primary) !important;
+  color: #ffffff !important;
+}
+
+.lh-btn--full {
+  width: 100%;
+  justify-content: center;
+  margin-top: 1.5rem;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   Sobre mim
+   ========================================================= */
+.lh-sobre__grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.lh-sobre__photo-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.lh-photo {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--color-primary);
+  box-shadow: 0 4px 20px rgba(30,58,138,0.2);
+  display: block;
+}
+
+.lh-photo--placeholder {
+  background-color: var(--color-section-alt);
+}
+
+.lh-sobre__text p {
+  margin-bottom: 1.25rem;
+  color: var(--color-text);
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+/* =========================================================
+   Cards grid
+   ========================================================= */
+.lh-cards {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.lh-cards--3 { grid-template-columns: repeat(3, 1fr); }
+.lh-cards--4 { grid-template-columns: repeat(4, 1fr); }
+
+.lh-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 2px 12px rgba(30,58,138,0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.lh-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(30,58,138,0.14);
+}
+
+.lh-card--center { text-align: center; }
+
+.lh-card__flag {
+  display: block;
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.lh-card__icon {
+  display: block;
+  font-size: 2.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.lh-card__title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.2rem;
+  color: var(--color-primary);
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+.lh-card--quote {
+  border-left: 4px solid var(--color-accent);
+}
+
+.lh-card__quote {
+  font-style: italic;
+  color: var(--color-text);
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+
+.lh-card__author {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  font-weight: 500;
+  margin: 0;
+}
+
+/* =========================================================
+   Exames — badges
+   ========================================================= */
+.lh-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.lh-badge {
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  border-radius: 999px;
+  background-color: var(--color-primary);
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+/* =========================================================
+   Contato
+   ========================================================= */
+.lh-contato__grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 3rem;
+  align-items: start;
+}
+
+.lh-contato__info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.lh-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+  font-size: 1rem;
+}
+
+.lh-info-item__icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.lh-info-item a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.lh-info-item a:hover {
+  color: var(--color-accent);
+}
+
+/* =========================================================
+   lh-* Responsive
+   ========================================================= */
+@media (max-width: 1024px) {
+  .lh-cards--4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .lh-section {
+    padding: 3.5rem 0;
+  }
+
+  .lh-hero {
+    padding: 5rem 0 4rem !important;
+  }
+
+  .lh-cards--3,
+  .lh-cards--4 {
+    grid-template-columns: 1fr;
+  }
+
+  .lh-sobre__grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .lh-contato__grid {
+    grid-template-columns: 1fr;
   }
 }
