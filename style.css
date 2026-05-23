@@ -713,3 +713,81 @@ body.home #primary.lh-content-area {
     grid-template-columns: 1fr;
   }
 }
+
+/* =========================================================
+   Logo — branding textual via SVG data URI
+   ========================================================= */
+.ast-site-title-wrap .site-title {
+  font-size: 0 !important;
+  line-height: 0 !important;
+}
+
+.main-header-bar .site-title a,
+.main-header-bar .site-title a:visited,
+.main-header-bar .site-title a:hover {
+  display: block !important;
+  width: 210px !important;
+  height: 48px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 210 48'%3E%3Ctext x='0' y='30' font-family='Georgia,serif' font-size='24' font-weight='700' fill='%231e3a8a'%3ELanny Herrera%3C/text%3E%3Ctext x='2' y='44' font-family='Arial,sans-serif' font-size='9' font-weight='600' letter-spacing='2' fill='%230d9488'%3EAULAS DE IDIOMAS%3C/text%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  background-position: left center !important;
+  color: transparent !important;
+}
+
+@media (max-width: 768px) {
+  .main-header-bar .site-title a,
+  .main-header-bar .site-title a:visited {
+    width: 170px !important;
+    height: 38px !important;
+  }
+}
+
+/* =========================================================
+   Language Switcher — compacto PT | ES | EN
+   ========================================================= */
+#ast-hf-menu-1 {
+  flex-wrap: nowrap !important;
+}
+
+.lang-item.lang-item-first {
+  border-left: 1.5px solid rgba(30,58,138,0.2) !important;
+  padding-left: 16px !important;
+  margin-left: 8px !important;
+}
+
+/* Ocultar texto completo */
+.lang-item .menu-link {
+  font-size: 0 !important;
+  padding: 0 4px !important;
+  color: transparent !important;
+  min-width: 26px;
+  text-align: center;
+}
+
+/* Mostrar código de 2 letras */
+.lang-item a[hreflang="pt-BR"]::after { content: "PT"; }
+.lang-item a[hreflang="es-ES"]::after { content: "ES"; }
+.lang-item a[hreflang="en-US"]::after { content: "EN"; }
+
+.lang-item .menu-link::after {
+  font-size: 0.72rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--color-text);
+  opacity: 0.5;
+  display: inline;
+}
+
+.lang-item.current-lang .menu-link::after {
+  opacity: 1;
+  color: var(--color-primary);
+  border-bottom: 2px solid var(--color-accent);
+  padding-bottom: 2px;
+}
+
+.lang-item .menu-link:hover::after {
+  opacity: 1;
+  color: var(--color-accent) !important;
+}
