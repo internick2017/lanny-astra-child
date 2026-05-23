@@ -33,3 +33,36 @@ h1, h2, h3 {
   font-family: 'Playfair Display', Georgia, serif;
   line-height: 1.2;
 }
+
+/* =========================================================
+   Front page: ocultar título "Início" duplicado.
+   El H1 del Hero ya cumple esa función SEO/accesibilidad.
+   ========================================================= */
+.home .entry-title,
+.home .ast-archive-title,
+.page-id-15 .entry-title {
+  display: none;
+}
+
+.home .entry-content > .alignfull:first-child,
+.page-id-15 .entry-content > .alignfull:first-child {
+  margin-top: -2rem;
+}
+
+/* =========================================================
+   Smooth scroll para anchors del menu (#hero, #sobre, etc).
+   ========================================================= */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+/* =========================================================
+   Buttons: estilo pill cálido.
+   ========================================================= */
+.wp-block-button__link {
+  background-color: var(--color-accent);
+  border-radius: 999px;
+  padding: 1rem 2rem;
+  font-weight: 600;
+}
