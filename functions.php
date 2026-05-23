@@ -234,16 +234,17 @@ add_filter( 'wp_nav_menu_objects', function( $items, $_args ) {
 	if ( ! function_exists( 'pll_home_url' ) ) {
 		return $items;
 	}
+	$default_lang = function_exists( 'pll_default_language' ) ? pll_default_language() : 'pt';
 	foreach ( $items as $item ) {
 		if ( empty( $item->classes ) || ! in_array( 'lang-item', $item->classes, true ) ) {
 			continue;
 		}
 		foreach ( $item->classes as $class ) {
 			if ( preg_match( '/^lang-item-([a-z]{2})$/', $class, $m ) ) {
-				$home = pll_home_url( $m[1] );
-				if ( $home ) {
-					$item->url = $home;
-				}
+				$lang = $m[1];
+				$item->url = ( $lang === $default_lang )
+					? home_url( '/' )
+					: home_url( '/' . $lang . '/' );
 				break;
 			}
 		}
