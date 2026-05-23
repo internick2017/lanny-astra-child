@@ -22,7 +22,7 @@ jobs:
           protocol: ftp
           port: 21
           local-dir: ./
-          server-dir: /lanny.nickgranados.com/wp-content/themes/lanny-astra-child/
+          server-dir: /
           dangerous-clean-slate: false
           log-level: standard
           exclude: |
