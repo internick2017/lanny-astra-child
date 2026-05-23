@@ -226,28 +226,33 @@ add_filter( 'wpseo_metadesc', function( $desc ) {
 } );
 
 /* ==========================================================
-   Language switcher — forzar URLs a la raíz del idioma.
-   Polylang vincula a /es/inicio-2/ en vez de /es/; esto
-   lo corrige usando pll_home_url() para cada lang-item.
+   Language switcher — forzar URLs a la raíz de cada idioma.
+   Polylang vincula a /es/inicio-2/ en vez de /es/ para el
+   idioma default y para traducciones de la front page.
+   Se corrige client-side para evitar conflictos de prioridad
+   con los filtros internos de Polylang (priority 20+).
    ========================================================== */
-add_filter( 'wp_nav_menu_objects', function( $items, $_args ) {
-	if ( ! function_exists( 'pll_home_url' ) ) {
-		return $items;
+add_action( 'wp_footer', function() {
+	if ( ! function_exists( 'pll_languages_list' ) ) {
+		return;
 	}
-	$default_lang = function_exists( 'pll_default_language' ) ? pll_default_language() : 'pt';
-	foreach ( $items as $item ) {
-		if ( empty( $item->classes ) || ! in_array( 'lang-item', $item->classes, true ) ) {
-			continue;
-		}
-		foreach ( $item->classes as $class ) {
-			if ( preg_match( '/^lang-item-([a-z]{2})$/', $class, $m ) ) {
-				$lang = $m[1];
-				$item->url = ( $lang === $default_lang )
-					? home_url( '/' )
-					: home_url( '/' . $lang . '/' );
-				break;
-			}
-		}
+	$default = function_exists( 'pll_default_language' ) ? pll_default_language() : 'pt';
+	$langs    = pll_languages_list();
+	$map      = array();
+	foreach ( $langs as $lang ) {
+		$map[ $lang ] = ( $lang === $default )
+			? home_url( '/' )
+			: home_url( '/' . $lang . '/' );
 	}
-	return $items;
-}, 25, 2 );
+	?>
+	<script>
+	(function(){
+		var map = <?php echo wp_json_encode( $map ); ?>;
+		Object.keys(map).forEach(function(lang){
+			var a = document.querySelector('.lang-item-' + lang + ' a');
+			if (a) a.href = map[lang];
+		});
+	})();
+	</script>
+	<?php
+} );
