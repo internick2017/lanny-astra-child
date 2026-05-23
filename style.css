@@ -42,6 +42,7 @@ h1, h2, h3, h4 {
 
 /* =========================================================
    Ocultar título de página duplicado en front page
+   + quitar el gap de margin-top del content-area
    ========================================================= */
 .home .entry-title,
 .home .ast-archive-title,
@@ -49,6 +50,14 @@ h1, h2, h3, h4 {
 body.page-id-15 .entry-title,
 body.page-id-15 h1.entry-title {
   display: none !important;
+}
+
+.home #primary,
+.home .content-area,
+body.page-id-15 #primary,
+body.page-id-15 .content-area {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
 }
 
 /* =========================================================
