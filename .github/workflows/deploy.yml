@@ -13,9 +13,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install lftp
-        run: sudo apt-get install -y lftp
-
       - name: Setup SSH key
         run: |
           mkdir -p ~/.ssh
@@ -25,20 +22,20 @@ jobs:
 
       - name: Deploy via SFTP
         run: |
-          lftp -c "
-            set sftp:connect-program 'ssh -a -x -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=no';
-            open sftp://nickda77@sh00216.hostgator.com.br;
-            mirror --reverse --delete --verbose \
-              --exclude-glob .git \
-              --exclude-glob .github \
-              --exclude-glob '*.md' \
-              --exclude-glob '*.py' \
-              --exclude-glob '*.zip' \
-              --exclude-glob .gitignore \
-              --exclude-glob .gitattributes \
-              --exclude-glob .ftp-deploy-sync-state.json \
-              ./ lanny.nickgranados.com/wp-content/themes/lanny-astra-child/
-          "
+          REMOTE="lanny.nickgranados.com/wp-content/themes/lanny-astra-child"
+          # Build batch file: upload every PHP and CSS file in the repo root
+          find . -maxdepth 1 -name "*.php" -o -name "*.css" | sed 's|^\./||' | \
+            awk -v r="$REMOTE" '{print "put " $0 " " r "/" $0}' > /tmp/sftp-batch.txt
+          # Also sync any subdirectory PHP/CSS (template parts, etc.)
+          find . -mindepth 2 -name "*.php" -o -mindepth 2 -name "*.css" | \
+            grep -v '.git\|.github' | sed 's|^\./||' | \
+            awk -v r="$REMOTE" '{print "put " $0 " " r "/" $0}' >> /tmp/sftp-batch.txt
+          echo "Files to deploy:"
+          cat /tmp/sftp-batch.txt
+          sftp -i ~/.ssh/deploy_key \
+            -o StrictHostKeyChecking=no \
+            -b /tmp/sftp-batch.txt \
+            nickda77@sh00216.hostgator.com.br
 
       - name: Purge LiteSpeed cache
         run: |
