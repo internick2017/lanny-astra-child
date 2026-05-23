@@ -250,4 +250,4 @@ add_filter( 'wp_nav_menu_objects', function( $items, $_args ) {
 		}
 	}
 	return $items;
-}, 10, 2 );
+}, 25, 2 );
