@@ -226,6 +226,74 @@ add_filter( 'wpseo_metadesc', function( $desc ) {
 } );
 
 /* ==========================================================
+   Open Graph + Twitter Card — títulos, descripción e imagen
+   por idioma. Corrige el og:title genérico de Yoast y fuerza
+   la imagen OG 1200×630 generada para el site.
+   ========================================================== */
+$lanny_og_image_url = 'https://lanny.nickgranados.com/wp-content/uploads/2026/05/og-lanny-herrera.png';
+
+add_filter( 'wpseo_opengraph_title', function( $title ) {
+	if ( ! is_front_page() ) { return $title; }
+	$lang = function_exists( 'pll_current_language' ) ? pll_current_language() : 'pt';
+	$titles = array(
+		'pt' => 'Lanny Herrera | Professora de Inglês, Espanhol e Português Online',
+		'es' => 'Lanny Herrera | Profesora de Inglés, Español y Portugués Online',
+		'en' => 'Lanny Herrera | Online English, Spanish & Portuguese Teacher',
+	);
+	return isset( $titles[ $lang ] ) ? $titles[ $lang ] : $title;
+} );
+
+add_filter( 'wpseo_opengraph_desc', function( $desc ) {
+	if ( ! is_front_page() ) { return $desc; }
+	$lang = function_exists( 'pll_current_language' ) ? pll_current_language() : 'pt';
+	$descs = array(
+		'pt' => 'Aulas online ao vivo de inglês, espanhol e português para todos os níveis. Metodologia personalizada e preparação para TOEIC, TOEFL, IELTS, DELE e CELPE-Bras.',
+		'es' => 'Clases online en vivo de inglés, español y portugués para todos los niveles. Metodología personalizada y preparación para TOEIC, TOEFL, IELTS y DELE.',
+		'en' => 'Live online classes in English, Spanish and Portuguese for all levels. Personalized methodology and preparation for TOEIC, TOEFL, IELTS, DELE and CELPE-Bras.',
+	);
+	return isset( $descs[ $lang ] ) ? $descs[ $lang ] : $desc;
+} );
+
+add_filter( 'wpseo_opengraph_image', function( $image ) use ( $lanny_og_image_url ) {
+	if ( ! is_front_page() ) { return $image; }
+	return $lanny_og_image_url;
+} );
+
+add_filter( 'wpseo_opengraph_locale', function( $locale ) {
+	if ( ! is_front_page() ) { return $locale; }
+	$lang = function_exists( 'pll_current_language' ) ? pll_current_language() : 'pt';
+	$locales = array( 'pt' => 'pt_BR', 'es' => 'es_ES', 'en' => 'en_US' );
+	return isset( $locales[ $lang ] ) ? $locales[ $lang ] : $locale;
+} );
+
+add_filter( 'wpseo_twitter_title', function( $title ) {
+	if ( ! is_front_page() ) { return $title; }
+	$lang = function_exists( 'pll_current_language' ) ? pll_current_language() : 'pt';
+	$titles = array(
+		'pt' => 'Lanny Herrera | Professora de Inglês, Espanhol e Português Online',
+		'es' => 'Lanny Herrera | Profesora de Inglés, Español y Portugués Online',
+		'en' => 'Lanny Herrera | Online English, Spanish & Portuguese Teacher',
+	);
+	return isset( $titles[ $lang ] ) ? $titles[ $lang ] : $title;
+} );
+
+add_filter( 'wpseo_twitter_description', function( $desc ) {
+	if ( ! is_front_page() ) { return $desc; }
+	$lang = function_exists( 'pll_current_language' ) ? pll_current_language() : 'pt';
+	$descs = array(
+		'pt' => 'Aulas online ao vivo de inglês, espanhol e português para todos os níveis. Metodologia personalizada e preparação para TOEIC, TOEFL, IELTS, DELE e CELPE-Bras.',
+		'es' => 'Clases online en vivo de inglés, español y portugués para todos los niveles. Metodología personalizada y preparación para TOEIC, TOEFL, IELTS y DELE.',
+		'en' => 'Live online classes in English, Spanish and Portuguese for all levels. Personalized methodology and preparation for TOEIC, TOEFL, IELTS, DELE and CELPE-Bras.',
+	);
+	return isset( $descs[ $lang ] ) ? $descs[ $lang ] : $desc;
+} );
+
+add_filter( 'wpseo_twitter_image', function( $image ) use ( $lanny_og_image_url ) {
+	if ( ! is_front_page() ) { return $image; }
+	return $lanny_og_image_url;
+} );
+
+/* ==========================================================
    Language switcher — forzar URLs a la raíz de cada idioma.
    Polylang vincula a /es/inicio-2/ en vez de /es/ para el
    idioma default y para traducciones de la front page.
