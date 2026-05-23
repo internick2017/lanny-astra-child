@@ -1,0 +1,35 @@
+/*
+Theme Name: Astra Child — Lanny Herrera
+Theme URI: https://lanny.nickgranados.com
+Description: Child theme de Astra para el sitio de Lanny Herrera (profesora de idiomas online — inglés, español, portugués).
+Author: Nick Granados
+Author URI: https://nickgranados.com
+Template: astra
+Version: 0.1.0
+License: MIT
+Text Domain: astra-child-lanny
+*/
+
+/* =========================================================
+   Paleta (placeholder — confirmar con Lanny en Fase 3)
+   ========================================================= */
+:root {
+  --color-primary: #1e3a8a;   /* navy temporal */
+  --color-accent:  #f97316;   /* coral cálido temporal */
+  --color-bg:      #fdfbf7;   /* crema */
+  --color-text:    #1f2937;
+}
+
+/* =========================================================
+   Tipografía base
+   ========================================================= */
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  line-height: 1.2;
+}
