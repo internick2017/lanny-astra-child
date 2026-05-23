@@ -6,33 +6,44 @@ on:
   workflow_dispatch:
 
 jobs:
-  ftp-deploy:
-    name: FTP deploy
+  sftp-deploy:
+    name: SFTP deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp
-          port: 21
-          local-dir: ./
-          server-dir: /
-          dangerous-clean-slate: false
-          log-level: standard
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github/**
-            **/.gitignore
-            **/.gitattributes
-            **/README.md
-            **/LICENSE
-            **/*.zip
-            **/*.md
-            **/lanny-bootstrap.py
+      - name: Install lftp
+        run: sudo apt-get install -y lftp
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H sh00216.hostgator.com.br >> ~/.ssh/known_hosts
+
+      - name: Deploy via SFTP
+        run: |
+          lftp -c "
+            set sftp:connect-program 'ssh -a -x -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=no';
+            open sftp://nickda77@sh00216.hostgator.com.br;
+            mirror --reverse --delete --verbose \
+              --exclude-glob .git \
+              --exclude-glob .github \
+              --exclude-glob '*.md' \
+              --exclude-glob '*.py' \
+              --exclude-glob '*.zip' \
+              --exclude-glob .gitignore \
+              --exclude-glob .gitattributes \
+              --exclude-glob .ftp-deploy-sync-state.json \
+              ./ lanny.nickgranados.com/wp-content/themes/lanny-astra-child/
+          "
+
+      - name: Purge LiteSpeed cache
+        run: |
+          curl -s -X POST \
+            -H "Authorization: Basic $(echo -n 'lannyherrera:${{ secrets.WP_APP_PASSWORD }}' | base64 -w 0)" \
+            -H "Content-Type: application/json" \
+            "https://lanny.nickgranados.com/wp-json/litespeed/v1/purge/all" \
+            -w "\nHTTP: %{http_code}" || true
