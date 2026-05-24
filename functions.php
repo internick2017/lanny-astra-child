@@ -402,25 +402,3 @@ add_action( 'wp_footer', function() {
 	<?php
 } );
 
-/* ==========================================================
-   ONE-TIME: atribuir idioma Polylang nos depoimentos criados
-   via REST API (sem suporte ao campo lang no free tier).
-   Transient impede re-execução. Remover após primeiro deploy.
-   ========================================================== */
-add_action( 'admin_init', function () {
-	if ( get_transient( 'lh_langs_set_v1' ) ) {
-		return;
-	}
-	if ( ! function_exists( 'pll_set_post_language' ) ) {
-		return;
-	}
-	$lang_map = array(
-		34 => 'pt', 35 => 'pt', 36 => 'pt',
-		40 => 'es', 41 => 'es', 42 => 'es',
-		43 => 'en', 44 => 'en', 45 => 'en',
-	);
-	foreach ( $lang_map as $post_id => $lang ) {
-		pll_set_post_language( $post_id, $lang );
-	}
-	set_transient( 'lh_langs_set_v1', 1, YEAR_IN_SECONDS );
-} );
