@@ -227,6 +227,12 @@ add_action( 'init', function () {
 	) );
 } );
 
+// Registrar o CPT no Polylang como traduzível
+add_filter( 'pll_get_post_types', function ( $post_types, $is_settings ) {
+	$post_types['lh_testimonial'] = 'lh_testimonial';
+	return $post_types;
+}, 10, 2 );
+
 // Coluna "Idioma" na listagem do admin
 add_filter( 'manage_lh_testimonial_posts_columns', function ( $cols ) {
 	$cols['lang'] = 'Idioma';
