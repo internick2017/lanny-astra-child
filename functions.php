@@ -197,6 +197,74 @@ function lanny_all_strings() {
 }
 
 /* ==========================================================
+   CPT lh_testimonial — depoimentos gerenciados pelo admin.
+   Compatível com Polylang: filtra por idioma ativo.
+   ========================================================== */
+add_action( 'init', function () {
+	register_post_type( 'lh_testimonial', array(
+		'labels'              => array(
+			'name'               => 'Depoimentos',
+			'singular_name'      => 'Depoimento',
+			'add_new'            => 'Adicionar',
+			'add_new_item'       => 'Adicionar Depoimento',
+			'edit_item'          => 'Editar Depoimento',
+			'new_item'           => 'Novo Depoimento',
+			'view_item'          => 'Ver Depoimento',
+			'search_items'       => 'Buscar Depoimentos',
+			'not_found'          => 'Nenhum depoimento encontrado.',
+			'not_found_in_trash' => 'Nenhum depoimento na lixeira.',
+			'menu_name'          => 'Depoimentos',
+		),
+		'public'              => false,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'show_in_rest'        => true,
+		'menu_icon'           => 'dashicons-format-quote',
+		'supports'            => array( 'title', 'editor' ),
+		'menu_position'       => 25,
+		'exclude_from_search' => true,
+		'publicly_queryable'  => false,
+	) );
+} );
+
+// Coluna "Idioma" na listagem do admin
+add_filter( 'manage_lh_testimonial_posts_columns', function ( $cols ) {
+	$cols['lang'] = 'Idioma';
+	return $cols;
+} );
+add_action( 'manage_lh_testimonial_posts_custom_column', function ( $col, $post_id ) {
+	if ( $col === 'lang' && function_exists( 'pll_get_post_language' ) ) {
+		echo esc_html( strtoupper( pll_get_post_language( $post_id ) ) );
+	}
+}, 10, 2 );
+
+/**
+ * lh_get_testimonials( $limit )
+ * Retorna posts lh_testimonial do idioma atual.
+ * Fallback: todos os idiomas se não houver no idioma ativo.
+ */
+function lh_get_testimonials( $limit = 3 ) {
+	$lang = function_exists( 'pll_current_language' ) ? pll_current_language() : null;
+	$args = array(
+		'post_type'      => 'lh_testimonial',
+		'post_status'    => 'publish',
+		'posts_per_page' => $limit,
+		'orderby'        => 'menu_order',
+		'order'          => 'ASC',
+	);
+	if ( $lang && function_exists( 'pll_get_post_language' ) ) {
+		$args['lang'] = $lang;
+	}
+	$posts = get_posts( $args );
+	// Fallback sem filtro de idioma
+	if ( empty( $posts ) && $lang ) {
+		unset( $args['lang'] );
+		$posts = get_posts( $args );
+	}
+	return $posts;
+}
+
+/* ==========================================================
    SEO — título y descripción por idioma (via filtros Yoast)
    ========================================================== */
 add_filter( 'wpseo_title', function( $title ) {

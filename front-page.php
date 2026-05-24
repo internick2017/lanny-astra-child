@@ -147,26 +147,46 @@ get_header();
 
     <!-- =====================================================
          DEPOIMENTOS
+         Fonte: CPT lh_testimonial (gerenciado no admin WP).
+         Fallback: strings hardcoded quando o CPT está vazio.
          ===================================================== -->
     <section class="lh-section lh-section--alt" id="depoimentos">
       <div class="lh-inner">
         <h2 class="lh-section__title"><?php echo esc_html( $t['depo_title'] ); ?></h2>
         <div class="lh-cards lh-cards--3">
 
-          <div class="lh-card lh-card--quote">
-            <p class="lh-card__quote"><?php echo $t['depo_1_text']; ?></p>
-            <p class="lh-card__author"><?php echo esc_html( $t['depo_1_author'] ); ?></p>
-          </div>
+          <?php
+          $depoimentos = function_exists( 'lh_get_testimonials' ) ? lh_get_testimonials( 3 ) : array();
 
-          <div class="lh-card lh-card--quote">
-            <p class="lh-card__quote"><?php echo $t['depo_2_text']; ?></p>
-            <p class="lh-card__author"><?php echo esc_html( $t['depo_2_author'] ); ?></p>
-          </div>
-
-          <div class="lh-card lh-card--quote">
-            <p class="lh-card__quote"><?php echo $t['depo_3_text']; ?></p>
-            <p class="lh-card__author"><?php echo esc_html( $t['depo_3_author'] ); ?></p>
-          </div>
+          if ( ! empty( $depoimentos ) ) :
+            foreach ( $depoimentos as $depo ) :
+              $quote  = wp_kses_post( apply_filters( 'the_content', $depo->post_content ) );
+              $author = esc_html( $depo->post_title );
+              ?>
+              <div class="lh-card lh-card--quote">
+                <p class="lh-card__quote"><?php echo $quote; ?></p>
+                <p class="lh-card__author">&mdash; <?php echo $author; ?></p>
+              </div>
+              <?php
+            endforeach;
+          else :
+            // Fallback — strings hardcoded enquanto não há depoimentos reais no CPT
+            ?>
+            <div class="lh-card lh-card--quote">
+              <p class="lh-card__quote"><?php echo $t['depo_1_text']; ?></p>
+              <p class="lh-card__author"><?php echo esc_html( $t['depo_1_author'] ); ?></p>
+            </div>
+            <div class="lh-card lh-card--quote">
+              <p class="lh-card__quote"><?php echo $t['depo_2_text']; ?></p>
+              <p class="lh-card__author"><?php echo esc_html( $t['depo_2_author'] ); ?></p>
+            </div>
+            <div class="lh-card lh-card--quote">
+              <p class="lh-card__quote"><?php echo $t['depo_3_text']; ?></p>
+              <p class="lh-card__author"><?php echo esc_html( $t['depo_3_author'] ); ?></p>
+            </div>
+            <?php
+          endif;
+          ?>
 
         </div>
       </div>
